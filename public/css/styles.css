@@ -1,0 +1,29 @@
+body {
+  background: #1f1f1f;
+}
+
+path:hover {
+  opacity: 0.5;
+}
+
+.province-tooltip {
+  display: none;
+  padding: 4px 5px;
+  background-color: #3f3b3b;
+  color: #e5e2e2;
+  border: 1px solid #e5e2e2;
+  width: 200px;
+  height: 80px;
+  position: absolute;
+  z-index: 999;
+  pointer-events: none;
+}
+
+.province-tooltip > div {
+  margin-top: 4px;
+}
+
+.province-tooltip-name {
+  font-size: 14px;
+  font-weight: 700;
+}
