@@ -19,7 +19,6 @@ app.get("/", (req, res) => {
 
 app.get("/covid-data", async (req, res, next) => {
   const covidData = await fetchCovidData();
-  console.log(covidData)
   res.json(covidData);
 });
 

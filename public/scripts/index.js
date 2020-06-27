@@ -20,7 +20,7 @@ const regionPopulations = {
 };
 
 function fillProvinceColors(covidData) {
-  $("#PK-BA").css("fill",);
+  $("#PK-BA").css("fill", getColorByLocation(covidData, "balochistan"));
   $("#PK-GB").css("fill", getColorByLocation(covidData, "gilgit"));
   $("#PK-IS").css("fill", getColorByLocation(covidData, "islamabad"));
   $("#PK-JK").css("fill", getColorByLocation(covidData, "kashmir"));
@@ -30,7 +30,7 @@ function fillProvinceColors(covidData) {
   $("#PK-TA").css("fill", getColorByLocation(covidData, "kp"));
 }
 
-async function getColorByLocation(covidData, location) {
+function getColorByLocation(covidData, location) {
   const locationCases = Number(covidData[location]["cases"].replace(",", ""));
   const pakTotalCases = Number(covidData["pakistan"]["cases"].replace(",", ""));
   const ratio = locationCases / pakTotalCases;
