@@ -4,6 +4,7 @@
   "description": "Pakistan heat map with COVID-19 statistics",
   "main": "index.js",
   "scripts": {
+    "start": "node ./app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,6 +20,8 @@
   "dependencies": {
     "express": "^4.17.1",
     "hbs": "^4.1.1",
+    "jsdom": "^16.2.2",
+    "node-fetch": "^2.6.0",
     "nodemon": "^2.0.4"
   }
 }

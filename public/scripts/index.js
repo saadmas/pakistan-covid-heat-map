@@ -1,8 +1,10 @@
 document.addEventListener("DOMContentLoaded", main);
 
-function main() {
-  fillProvinceColors();
-  addMouseOvers();
+async function main() {
+  const rawRes = await fetch('http://localhost:3000/covid-data');
+  const covidData = await rawRes.json();
+  fillProvinceColors(covidData.total);
+  addMouseOvers(covidData.total);
   addMouseOuts();
 }
 
@@ -17,36 +19,24 @@ const regionPopulations = {
   pakistan: 207774520,
 };
 
+function fillProvinceColors(covidData) {
+  $("#PK-BA").css("fill",);
+  $("#PK-GB").css("fill", getColorByLocation(covidData, "gilgit"));
+  $("#PK-IS").css("fill", getColorByLocation(covidData, "islamabad"));
+  $("#PK-JK").css("fill", getColorByLocation(covidData, "kashmir"));
+  $("#PK-KP").css("fill", getColorByLocation(covidData, "kp"));
+  $("#PK-PB").css("fill", getColorByLocation(covidData, "punjab"));
+  $("#PK-SD").css("fill", getColorByLocation(covidData, "sindh"));
+  $("#PK-TA").css("fill", getColorByLocation(covidData, "kp"));
+}
 
-// async function getPakData() {
-//      const pakCovidData = await getCovidData.fetchCovidData();
-//      return pakCovidData;
-// }
-
-// Actual function that will calculate ratio and get color for each province using live data
-// async function getColorByLocation(location) {
-//     const covidData = await getPakData();
-//     const locationCases = parseInt(covidData["total"][location]["cases"].replace(",", ""));
-//     const pakTotalCases = parseInt(covidData["total"]["pakistan"]["cases"].replace(",", ""));
-//     const ratio = locationCases/pakTotalCases;
-//     const color = colorShade(ratio);
-//     return color;
-// }
-
-
-//Actual function that will update heat map based on live data
-// async function updateHeatMap() {
-//     $(document).ready(function() {
-//         $("#PK-BA").css("fill", await getColorByLocation("balochistan"));
-//         $("#PK-GB").css("fill", await getColorByLocation("gilgit"));
-//         $("#PK-IS").css("fill", await getColorByLocation("islamabad"));
-//         $("#PK-JK").css("fill", await getColorByLocation("kashmir"));
-//         $("#PK-KP").css("fill", await getColorByLocation("kp"));
-//         $("#PK-PB").css("fill", await getColorByLocation("punjab"));
-//         $("#PK-SD").css("fill", await getColorByLocation("sindh"));
-//         $("#PK-TA").css("fill", await getColorByLocation("kp"));
-//     });
-// }
+async function getColorByLocation(covidData, location) {
+  const locationCases = Number(covidData[location]["cases"].replace(",", ""));
+  const pakTotalCases = Number(covidData["pakistan"]["cases"].replace(",", ""));
+  const ratio = locationCases / pakTotalCases;
+  const color = colorShade(ratio);
+  return color;
+}
 
 function colorShade(ratio) {
   switch (true) {
@@ -67,26 +57,16 @@ function colorShade(ratio) {
   }
 }
 
-function fillProvinceColors() {
-  $("#PK-BA").css("fill", getColorByLocation(9475));
-  $("#PK-GB").css("fill", getColorByLocation(1288));
-  $("#PK-IS").css("fill", getColorByLocation(10912));
-  $("#PK-JK").css("fill", getColorByLocation(845));
-  $("#PK-KP").css("fill", getColorByLocation(21997));
-  $("#PK-PB").css("fill", getColorByLocation(66943));
-  $("#PK-SD").css("fill", getColorByLocation(69628));
-  $("#PK-TA").css("fill", getColorByLocation(21997));
-}
-
-function addMouseOvers() {
-  $("#PK-BA").mousemove((e) => displayProvinceTooltip('balochistan', 9475, e));
-  $("#PK-GB").mousemove((e) => displayProvinceTooltip('gilgit', 1288, e));
-  $("#PK-IS").mousemove((e) => displayProvinceTooltip('islamabad', 10912, e));
-  $("#PK-JK").mousemove((e) => displayProvinceTooltip('kashmir', 845, e));
-  $("#PK-KP").mousemove((e) => displayProvinceTooltip('kpk', 21997, e));
-  $("#PK-PB").mousemove((e) => displayProvinceTooltip('punjab', 66943, e));
-  $("#PK-SD").mousemove((e) => displayProvinceTooltip('sindh', 69628, e));
-  $("#PK-TA").mousemove((e) => displayProvinceTooltip('kpk', 21997, e));
+function addMouseOvers(covidData) {
+  const { balochistan, gilgit, islamabad, kashmir, kp, punjab, sindh } = covidData;
+  $("#PK-BA").mousemove((e) => displayProvinceTooltip('balochistan', balochistan.cases, e));
+  $("#PK-GB").mousemove((e) => displayProvinceTooltip('gilgit', gilgit.cases, e));
+  $("#PK-IS").mousemove((e) => displayProvinceTooltip('islamabad', islamabad.cases, e));
+  $("#PK-JK").mousemove((e) => displayProvinceTooltip('kashmir', kashmir.cases, e));
+  $("#PK-KP").mousemove((e) => displayProvinceTooltip('kpk', kp.cases, e));
+  $("#PK-PB").mousemove((e) => displayProvinceTooltip('punjab', punjab.cases, e));
+  $("#PK-SD").mousemove((e) => displayProvinceTooltip('sindh', sindh.cases, e));
+  $("#PK-TA").mousemove((e) => displayProvinceTooltip('kpk', kp.cases, e));
 }
 
 function addMouseOuts() {
@@ -149,7 +129,8 @@ function mapProvinceKeyToName(provinceKey) {
   }
 }
 
-function getPopulationInfected(cases, population) {
+function getPopulationInfected(casesStr, population) {
+  const cases = Number(casesStr.replace(",", ""))
   let populationInfected = (cases / population) * 100;
 
   if (getDecimalCount(populationInfected) > 0) {
@@ -194,7 +175,6 @@ function getNumberWithCommas(num) {
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-
 function getDecimalCount(num) {
   if (!num) {
     return 0;
@@ -225,16 +205,3 @@ function getNumberOfZeroDecimals(num) {
 
   return zeroCount;
 }
-
-// Temporary function used to get color using current data
-function getColorByLocation(currentLocationData) {
-  const ratio = currentLocationData / 181088;
-  const color = colorShade(ratio);
-  return color;
-}
-
-// Temporary function to update heat map based on current data
-function updateHeatMap() {
-  $(document).ready(onReady);
-}
-
