@@ -10,6 +10,10 @@ path:hover {
   opacity: 0.3;
 }
 
+.heat-map-container {
+	overflow: hidden; 
+}
+
 .heat-map {
   width: 1000px;
   height: 1000px;
