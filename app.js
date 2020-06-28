@@ -22,4 +22,4 @@ app.get("/covid-data", async (req, res, next) => {
   res.json(covidData);
 });
 
-app.listen(process.env.PORT || 3000);
+app.listen(process.env.PORT || 8000);

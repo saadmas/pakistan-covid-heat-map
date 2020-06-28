@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", main);
 
 async function main() {
-  const rawRes = await fetch('http://localhost:3000/covid-data');
+  const rawRes = await fetch('http://localhost:8000/covid-data');
   const covidData = await rawRes.json();
   fillProvinceColors(covidData.total);
   addMouseOvers(covidData.total);
