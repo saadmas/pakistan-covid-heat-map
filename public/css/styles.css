@@ -1,5 +1,7 @@
 body {
   background: #121212;
+  overflow: hidden;
+  font-family: 'Josefin Sans', sans-serif;
 }
 
 path {
@@ -7,7 +9,7 @@ path {
 }
 
 path:hover {
-  opacity: 0.3;
+  opacity: 0.5;
 }
 
 .heat-map-container {
@@ -17,6 +19,7 @@ path:hover {
 .heat-map {
   width: 1000px;
   height: 1000px;
+  padding: 100px;
 }
 
 .province-tooltip {
@@ -41,19 +44,20 @@ path:hover {
   font-weight: 700;
 }
 
-@media screen and (max-width: 500px) {
+@media only screen and (max-device-width: 500px) {
   .heat-map {
-    width: 500px;
+    width: 400px;
     height: 600px;
+    padding: 20px 20px 0px 0px;
   }
 
   .province-tooltip {
-    width: 130px;
-    height: 65px;
-    font-size: 10px;
+    width: 110px;
+    height: 50px;
+    font-size: 9px;
   }
 
   .province-tooltip-name {
-    font-size: 12px;
+    font-size: 11px;
   }
 }
