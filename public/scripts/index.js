@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", main);
 
 async function main() {
-  const rawRes = await fetch('http://localhost:8000/covid-data');
+  const rawRes = await fetch('https://life-first-pak-covid-heat-map.et.r.appspot.com/covid-data');
   const covidData = await rawRes.json();
   fillProvinceColors(covidData.total);
   addMouseOvers(covidData.total);
@@ -92,9 +92,16 @@ function displayProvinceTooltip(provinceKey, cases, e) {
   const provinceCovidInfo = getProvinceCovidInfo(cases, provinceKey);
   $('.province-tooltip-cases').html(provinceCovidInfo);
 
+  let top = e.pageY - 100;
+  let left = e.pageX - 30;
+  const deviceWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+  if (deviceWidth < 500) {
+    top += 30;
+  }
+
   $(".province-tooltip").css({
-    top: (e.pageY - 100) + "px",
-    left: (e.pageX - 30) + "px"
+    top: `${top}px`,
+    left: `${left}px`
   });
 
   $(".province-tooltip").show();

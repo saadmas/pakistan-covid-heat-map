@@ -13,8 +13,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.json());
 
-app.get("/", (req, res) => {
+app.get("/desktop", (req, res) => {
   res.render("index");
+});
+
+app.get("/mobile", (req, res) => {
+  res.render("index-mobile");
 });
 
 app.get("/covid-data", async (req, res, next) => {
