@@ -1,0 +1,10 @@
+{
+  "applications": {
+    "_default": {
+      "link": "life-first-covid-map"
+    },
+    "life-first-covid-map": {
+      "applicationId": "eVRAVPd6gRBqgDOxa9FkCzx04DRSmEZBUvz9Rrc1"
+    }
+  }
+}

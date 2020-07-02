@@ -1,11 +1,13 @@
 document.addEventListener("DOMContentLoaded", main);
 
 async function main() {
-  const rawRes = await fetch('https://life-first-pak-covid-heat-map.et.r.appspot.com/covid-data');
+  const rawRes = await fetch('http://localhost:8000/covid-data');
   const covidData = await rawRes.json();
   fillProvinceColors(covidData.total);
   addMouseOvers(covidData.total);
   addMouseOuts();
+  hideLoading();
+  showMap();
 }
 
 const regionPopulations = {
@@ -18,6 +20,16 @@ const regionPopulations = {
   islamabad: 1014825,
   pakistan: 207774520,
 };
+
+function hideLoading() {
+  $(".spinner").hide();
+  $(".loading-text").hide();
+}
+
+function showMap() {
+  $(".heat-map").show();
+}
+
 
 function fillProvinceColors(covidData) {
   $("#PK-BA").css("fill", getColorByLocation(covidData, "balochistan"));
