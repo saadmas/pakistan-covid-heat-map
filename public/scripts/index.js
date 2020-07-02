@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", main);
 
 async function main() {
-  const rawRes = await fetch('http://localhost:8000/covid-data');
+  const rawRes = await fetch('https://life-first-pak-covid-heat-map.et.r.appspot.com/covid-data');
   const covidData = await rawRes.json();
   fillProvinceColors(covidData.total);
   addMouseOvers(covidData.total);
@@ -23,6 +23,8 @@ const regionPopulations = {
 
 function hideLoading() {
   $(".spinner").hide();
+  $(".spinner-mobile").hide();
+  $(".loading-text-mobile").hide();
   $(".loading-text").hide();
 }
 
