@@ -253,12 +253,12 @@ path:hover {
 
 .spinner {
   background: #121212;
-  margin-left: 500px;
+  margin-left: 150px;
 }
 
 .loading-text {
   color: #e5e2e2;
-  margin-left: 350px;
+  margin-left: 100px;
   margin-top: 200px;
   font-size: 25px;
 }
@@ -270,7 +270,7 @@ path:hover {
 
 .loading-text-mobile {
   color: #e5e2e2;
-  margin-left: 50px;
+  margin-left: 10px;
   margin-top: 150px;
   font-size: 14px;
 }
